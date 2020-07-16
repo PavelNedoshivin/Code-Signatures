@@ -1,0 +1,18 @@
+clc;
+clear;
+close all;
+M = 5;
+n = 2^M - 1;
+k = 16;
+nwords = 10;
+msgTx = gf(randi([0 1], nwords, k));
+t = bchnumerr(n, k);
+enc = bchenc(msgTx, n, k);
+noisycode = enc + randerr(nwords, n, 1:t);
+[msgRx, test] = bchdec(noisycode, n, k);
+disp(test);
+isequal(msgTx, msgRx);
+t2 = t + 1;
+noisycode2 = enc + randerr(nwords, n, 1:t2);
+[msgRx2, numerr] = bchdec(noisycode2, n, k);
+disp(numerr);
